@@ -15,6 +15,7 @@ public class ProductAController {
 
     @GetMapping("/lista")
     public List<ProductResponse> getAll() {
-        return productService.getProductFromB();
+        return productService.getAll();
     }
+
 }

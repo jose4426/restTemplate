@@ -2,7 +2,7 @@ package com.example.MS_A;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,10 +10,19 @@ import java.util.List;
 @Service
 public class ProductServ {
     @Autowired
-    private RestTemplate restTemplate;
-    public List<ProductResponse> getProductFromB() {
-        String url = "http://localhost:8086/api/lista"; // Ajusta la URL al endpoint de MS B
-        ProductResponse[] response = restTemplate.getForObject(url, ProductResponse[].class);
-        return Arrays.asList(response);
+    private WebClient.Builder webClientBuilder;
+
+    public List<ProductResponse> getAll() {
+
+        ProductResponse[] responseArray = webClientBuilder.build()
+                .get()
+                .uri("http://localhost:8086/api/lista")
+                .retrieve()
+                .bodyToMono((ProductResponse[].class))
+                .block(); //
+        return Arrays.asList(responseArray);
+
     }
+
+
 }
