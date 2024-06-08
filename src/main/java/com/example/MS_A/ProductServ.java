@@ -11,8 +11,9 @@ import java.util.List;
 public class ProductServ {
     @Autowired
     private RestTemplate restTemplate;
-    public List<ProductResponse> getProductFromB() {
-        String url = "http://localhost:8086/api/lista"; // Ajusta la URL al endpoint de MS B
+
+    public List<ProductResponse> getAllB() {
+        String url = "http://localhost:8086/api/lista";
         ProductResponse[] response = restTemplate.getForObject(url, ProductResponse[].class);
         return Arrays.asList(response);
     }
